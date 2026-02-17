@@ -1,13 +1,12 @@
 import React from 'react'
-import Hello from './components/hello'
+import layout from './(root)/layout'
+import Navbar from './components/layout'
 const Home = () => {
   console.log("what type of componets ")
 
   return (
     <main>
-
-      <div className='5x1 underline'> Welcome to Home</div>
-      <Hello />
+      <Navbar />
     </main>
   )
 }
