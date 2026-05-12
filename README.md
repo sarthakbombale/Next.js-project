@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+﻿# DummyJSON Admin Dashboard
 
-## Getting Started
+This project is a Next.js admin dashboard built with Material UI, Zustand, and NextAuth. It consumes the public DummyJSON API for login, users, and products.
 
-First, run the development server:
+## Features
+
+- Admin login with DummyJSON auth endpoint
+- Protected dashboard routes using NextAuth
+- Zustand state store for auth, users, products, and client-side caching
+- Users list with search and pagination
+- User detail pages with full profile information
+- Products list with search, category filter, and pagination
+- Product detail pages with image gallery and metadata
+- Responsive MUI UI across login, list, and detail screens
+
+## Installation
+
+```bash
+npm install
+```
+
+## Run locally
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Important routes
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `/login` — Admin login page
+- `/dashboard` — Dashboard home
+- `/dashboard/users` — Users list page
+- `/dashboard/users/[id]` — User detail page
+- `/dashboard/products` — Products list page
+- `/dashboard/products/[id]` — Product detail page
 
-## Learn More
+## Authentication
 
-To learn more about Next.js, take a look at the following resources:
+This app uses `next-auth` with a credentials provider to call `https://dummyjson.com/auth/login`. The token returned by DummyJSON is stored in Zustand and used to preserve auth state.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Zustand choice
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Zustand was chosen because it provides:
 
-## Deploy on Vercel
+- Simple and minimal state management for small-to-medium apps
+- Built-in support for async actions and caching
+- A small bundle footprint compared to Redux
+- Easy integration with React hooks and the Next.js app router
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Environment variables
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+No environment variables are required for local development. The credential login flow uses the public DummyJSON API directly.
+
+## Notes
+
+- The project is already configured for the Next.js `app` router and MUI theming.
+- Client-side caching is implemented in Zustand caches for users and products to avoid repeated API requests for the same queries.

@@ -1,10 +1,5 @@
 
-import Link from 'next/link'; // Import this for fast navigation
-import home from '../(root)/about/home';
-import about from '../(root)/about/about';
-import contact from '../(root)/about/contact';
-import projects from '../(root)/about/projects';
-
+import Link from 'next/link';
 
 const Navbar = () => {
     return (

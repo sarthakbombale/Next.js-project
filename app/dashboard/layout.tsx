@@ -1,26 +1,34 @@
-'use client';
+﻿'use client';
 import { useEffect } from 'react';
 import { useSession } from 'next-auth/react';
-import { useRouter, usePathname } from 'next/navigation';
-import { useStore } from '@/store/useStore';
+import { useRouter } from 'next/navigation';
 import { Box, CircularProgress } from '@mui/material';
-import Navbar from '@/components/Navbar';
+import AppHeader from '@/components/AppHeader';
+import { useStore } from '@/store/useStore';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const { setAuthUser } = useStore();
+  const setAuthUser = useStore((state) => state.setAuthUser);
+  const setToken = useStore((state) => state.setToken);
 
   useEffect(() => {
-    // 1. Protection Logic
     if (status === 'unauthenticated') {
       router.push('/login');
     }
-    // 2. Sync NextAuth to Zustand
+
     if (session?.user) {
-      setAuthUser(session.user);
+      const authUser = session.user as { name?: string; email?: string; token?: string };
+      if (typeof authUser.token === 'string') {
+        setAuthUser({
+          name: authUser.name || 'Admin',
+          email: authUser.email || 'admin@dummyjson.com',
+          token: authUser.token,
+        });
+        setToken(authUser.token);
+      }
     }
-  }, [status, session, router, setAuthUser]);
+  }, [status, session, router, setAuthUser, setToken]);
 
   if (status === 'loading') {
     return (
@@ -32,8 +40,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <Navbar />
-      <Box component="main" sx={{ flexGrow: 1, p: 3, bgcolor: '#f9f9f9' }}>
+      <AppHeader />
+      <Box component="main" sx={{ flexGrow: 1, p: { xs: 2, md: 4 }, bgcolor: '#f3f5f9' }}>
         {children}
       </Box>
     </Box>

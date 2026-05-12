@@ -16,10 +16,10 @@ export default function NotFound() {
       {/* Message Area */}
       <div className="mt-5 text-center">
         <h2 className="text-2xl font-semibold md:text-3xl">
-          Looks like you're lost in space.
+          Looks like you&apos;re lost in space.
         </h2>
         <p className="mt-4 text-gray-500 italic">
-          The page you are looking for doesn't exist or has been moved.
+          The page you are looking for doesn&apos;t exist or has been moved.
         </p>
       </div>
 
